@@ -6,6 +6,7 @@
  *     struct TreeNode *right;
  * };
  */
+ Method One:
 int leftlen(struct TreeNode* root){
     struct TreeNode* temp;
     int len=0;
@@ -79,4 +80,35 @@ int countNodes(struct TreeNode* root) {
     if(mark==1) t+=2;
     return sum-t;
 
+}
+
+Method Two:
+int leftlen(struct TreeNode* root){
+    struct TreeNode* temp;
+    int len=0;
+    temp=root;
+    while(temp!=NULL){
+        len++;
+        temp=temp->left;
+    }
+    return len;
+}
+int rightlen(struct TreeNode* root){
+    struct TreeNode* temp;
+    int len=0;
+    temp=root;
+    while(temp!=NULL){
+        len++;
+        temp=temp->right;
+    }
+    return len;
+}
+int countNodes(struct TreeNode* root) {
+    struct TreeNode* temp;
+    int sum,left,right;
+
+    left=leftlen(root);
+    right=rightlen(root);
+    if(left==right) return (1<<left)-1;
+    else return 1+ countNodes(root->left)+countNodes(root->right);
 }
