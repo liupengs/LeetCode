@@ -1,21 +1,4 @@
 class Solution(object):
-    def checkin(self,s,r,c):
-        if s in self.m[(r/3)*3+c/3]:
-            return False
-        else:
-            return True
-    def checkr(self,r,s):
-        if s in self.line[r]:
-            return False
-        else:
-            return True
-    
-    def checkc(self,c,s):
-        if s in self.v[c]:
-            return False
-        else:
-            return True
-                    
     def solve(self,board,point):
         if point==81:
             return True
@@ -30,7 +13,7 @@ class Solution(object):
         else:
             for i in range(1,10):
                 t=str(i)
-                if self.checkin(t,r,c) and self.checkr(r,t) and self.checkc(c,t):
+                if t not in self.m[(r/3)*3+c/3] and t not in self.line[r]  and t not in self.v[c]:
                     board[r][c]=t
                     self.line[r].append(t)
                     self.v[c].append(t)
@@ -45,10 +28,6 @@ class Solution(object):
             return False
                 
     def solveSudoku(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: void Do not return anything, modify board in-place instead.
-        """
         self.line=[[] for i in range(9)]
         self.v=[[] for i in range(9)]
         self.m=[[] for i in range(9)]
