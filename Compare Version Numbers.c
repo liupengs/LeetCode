@@ -1,32 +1,25 @@
-int lastPalindrome(char *str,int len){
-    int i,s,e;
-    s=0;
-    i=e=len-1;
-    while(s<e){
-        if(str[s]==str[e]){
-            s++;
-            e--;
-        }else{
-            i--;
-            s=0;
-            e=i;
+int getstr(char* version,int *a){
+    int i=0,j=0,t=0,len;
+    for(len=strlen(version);i<len;i++){
+        if(version[i]>='0' && version[i]<='9') t=t*10+(version[i]-'0');
+        else{
+            a[j++]=t;
+            t=0;
         }
     }
-    return i+1;
+    if(version[len-1]!='.') a[j++]=t;
+    return j;
 }
-char* shortestPalindrome(char* s) {
-    int len,i,j,k=0;
-    char *r=NULL;
-    len=strlen(s);
-    r=(char *)calloc((len+len+1),sizeof(char));
-    if(len<1) return r;
-
-    i=lastPalindrome(s,len);
-    for(j=len-1,k=0;j>=i;j--,k++){
-        r[k]=s[j];
+int compareVersion(char* version1, char* version2) {
+    int a[1000],b[1000],anum,bnum,i;
+    memset(a,0,sizeof(int)*1000);
+    memset(b,0,sizeof(int)*1000);
+    anum=getstr(version1,a);
+    bnum=getstr(version2,b);
+    anum=anum>bnum?anum:bnum;
+    for(i=0;i<=anum;i++){
+        if(a[i]>b[i]) return 1;
+        else if(a[i]<b[i]) return -1;
     }
-    for(j=0;j<len;j++,k++){
-        r[k]=s[j];
-    }
-    return r;
+    return 0;
 }
