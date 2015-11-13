@@ -27,15 +27,15 @@ class Solution(object):
             m=max(m,Ptemp[i][2])
             dicts={}
             for j in range(i+1,Plen):
-                if Ptemp[i][1]==Ptemp[j][1]:
+                t1=Ptemp[i][0]-Ptemp[j][0]
+                t2=Ptemp[i][1]-Ptemp[j][1]
+                if t2==0:
                     t="y_0"
-                elif Ptemp[i][0]==Ptemp[j][0]:
+                elif t1==0:
                     t="x_0"
                 else:
-                    if Ptemp[i][0]>Ptemp[j][0]:
-                        t="index_"+str(float(Ptemp[i][0]-Ptemp[j][0])/float(Ptemp[i][1]-Ptemp[j][1]))
-                    else:
-                        t="index_"+str(float(Ptemp[j][0]-Ptemp[i][0])/float(Ptemp[j][1]-Ptemp[i][1]))
+                    t=float(t1)/float(t2)
+                    
                 if dicts.has_key(t):
                     dicts[t]+=Ptemp[j][2]
                 else:
@@ -43,6 +43,3 @@ class Solution(object):
                 #print dicts
                 m=max(m,dicts[t])
         return m
-            
-            
-        
