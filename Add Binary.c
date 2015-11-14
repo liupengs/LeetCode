@@ -1,3 +1,4 @@
+//solution one
 #define max(a,b) (a)>(b)?(a):(b)
 char* addBinary(char* a, char* b) {
     int la,lb,i,j;
@@ -60,4 +61,23 @@ char* addBinary(char* a, char* b) {
     re=re+(j+1);
     return re;
     
+}
+
+//solution two
+#define max(a,b) (a)>(b)?(a):(b)
+char* addBinary(char* a, char* b) {
+    int la=strlen(a),lb=strlen(b),i,j,t;
+    char *re,r='0',ra,rb;
+    j=max(la,lb);
+    re=(char *)calloc(j+2,sizeof(char));
+    for(la--,lb--;la>=0 || lb>=0;la--,lb--){
+        ra=la>=0?a[la]:'0';
+        rb=lb>=0?b[lb]:'0';
+        t=ra+rb+r-144;
+        re[j--]=t%2+48;
+        r=t/2+48;
+    }
+    if(r!='0') re[j--]=r;
+    re=re+(j+1);
+    return re;
 }
