@@ -13,47 +13,31 @@ bool canBeZear(char *p,int s,int len){
 bool Match(char *s,char *p,int ss,int sp,int lens, int lenp){
     if(mark[ss][sp]==1) return true;
     else if(mark[ss][sp]==-1) return false;
-
-    if(ss==lens && lenp==sp) mark[ss][sp]=1;
-    else if(lens!=ss && lenp==sp) mark[ss][sp]=-1;
-    else if(lens==ss && lenp!=sp ){
+    
+    if(ss==lens){
         if(canBeZear(p,sp,lenp)) mark[ss][sp]=1;
         else mark[ss][sp]=-1;
-    }
+    }else if(lenp==sp) mark[ss][sp]=-1;
+    if(p[sp]=='*') mark[ss][sp]=-1;
+    
     if(mark[ss][sp]==1) return true;
     else if(mark[ss][sp]==-1) return false;
 
     if(p[sp]==s[ss] || p[sp]=='.'){
         if(sp+1==lenp || p[sp+1]!='*'){
-            if(Match(s,p,ss+1,sp+1,lens,lenp)){
-                mark[ss][sp]=1;
-            }else{
-                mark[ss][sp]=-1;
-            }
+            if(Match(s,p,ss+1,sp+1,lens,lenp)) mark[ss][sp]=1;
         }else{
-            if(Match(s,p,ss+1,sp,lens,lenp)){
-                mark[ss][sp]=1;
-            }else if(Match(s,p,ss+1,sp+2,lens,lenp)){
-                mark[ss][sp]=1;
-            }else if(Match(s,p,ss,sp+2,lens,lenp)){
-                mark[ss][sp]=1;
-            }else{
-                mark[ss][sp]=-1;
-            }
+            if(Match(s,p,ss+1,sp,lens,lenp)) mark[ss][sp]=1;
+            else if(Match(s,p,ss+1,sp+2,lens,lenp)) mark[ss][sp]=1;
+            else if(Match(s,p,ss,sp+2,lens,lenp)) mark[ss][sp]=1;
+            else mark[ss][sp]=-1;
         }
-    }else if(p[sp]=='*'){
-        mark[ss][sp]=-1;
     }else if(p[sp]!=s[ss] && sp+1<lenp && p[sp+1]=='*'){
-        if(Match(s,p,ss,sp+2,lens,lenp)){
-            mark[ss][sp]=1;
-        }else{
-            mark[ss][sp]=-1;
-        }
-    }else{
-        mark[ss][sp]=-1;
+        if(Match(s,p,ss,sp+2,lens,lenp)) mark[ss][sp]=1;
     }
-    if(mark[ss][sp]==1) return true;
-    else return false;
+    mark[ss][sp]=mark[ss][sp]==1?1:-1;
+    
+    return (mark[ss][sp]==1);
 }
 bool isMatch(char* s, char* p) {
     if(strcmp(p,".*")==0) return true;
