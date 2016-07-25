@@ -44,3 +44,36 @@ int nthUglyNumber(int n) {
     }
     return u[n-1];
 }
+
+int min(int t2, int t3, int t5)
+{
+    t2 = t2<t3?t2:t3;
+    t2 = t2<t5?t2:t5;
+    return t2;
+}
+
+int nthUglyNumber(int n) {
+    int u[n],i=5,s2=1,s3=2,s5=4,t2=2,t3=2,t5=2;
+    if(n==1) return 1;
+    else if(n==2) return 2;
+    else if(n==3) return 3;
+    else if(n==4) return 4;
+    else if(n==5) return 5;
+    u[0]=1;u[1]=2;u[2]=3,u[3]=4;u[4]=5;
+    while(i<n){
+        while(t2<=u[i]){
+            t2=2*u[s2];
+            s2++;
+        }
+        while(t3<=u[i]){
+            t3=3*u[s3];
+            s3++;
+        }
+        while(t5<=u[i]){
+            t5=5*u[s5];
+            s5++;
+        }
+        u[i++]=min(t2,t3,t5);
+    }
+    return u[n-1];
+}
